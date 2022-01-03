@@ -38,10 +38,11 @@ contract MetaCard {
     );
 
     event AddContact(address owner);
+    event RemoveContact(address owner);
 
     event AddSocialLink(uint256 id, string name, string link);
     event UpdateSocialLink(uint256 id, string name, string link);
-    event RemoveSocialLink(uint256 id, string name, string link);
+    event RemoveSocialLink(uint256 id);
 
     BusinessCard public businessCard;
     SocialLink[] public socialLinks;
@@ -130,6 +131,8 @@ contract MetaCard {
                 delete socialLinks[i];
                 socialLinks[i] = socialLinks[socialLinks.length - 1];
                 socialLinks.pop();
+                socialLinksCount -= 1;
+                emit RemoveSocialLink(_id);
             }
         }
     }
@@ -140,6 +143,19 @@ contract MetaCard {
         BusinessCard memory _contactBusinessCard = allBusinessCards[_contact];
         contacts.push(_contactBusinessCard.owner);
         emit AddContact(_contactBusinessCard.owner);
+    }
+
+    function removeContact(address _contact) public {
+        require(allBusinessCards[_contact].owner != address(0x0));
+        for (uint256 i = 0; i < contacts.length - 1; i++) {
+            if (contacts[i] == _contact) {
+                delete contacts[i];
+                contacts[i] = contacts[contacts.length - 1];
+                contacts.pop();
+                contactsCount -= 1;
+                emit RemoveContact(_contact);
+            }
+        }
     }
 
     function getBusinessCardByAddress(address _address)

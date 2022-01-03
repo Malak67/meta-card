@@ -106,7 +106,7 @@ describe("MetaCard", () => {
       expect(updatedSocialLinks.length).to.eq(1);
     });
 
-    it("Should add contacts", async () => {
+    it("Should add contacts and remove one contact", async () => {
       const createBusinessCardTx2 = await metacardInstance.connect(addr1).createBusinessCard("Jane Doe", "UI/UX Developer", "+1-202-555-0135");
       await createBusinessCardTx2.wait();
       const card2 = await metacardInstance.connect(addr1).getBusinessCard();
@@ -122,9 +122,28 @@ describe("MetaCard", () => {
       const card = await metacardInstance.connect(owner).getBusinessCard();
       expect(card.fullName).to.equal("John Doe");
 
-      console.log('Addresses: ', owner.address, card.owner)
-      const bizCards = await metacardInstance.connect(owner).getBusinessCardByAddress(addr2.address);
-      console.log('bizCards: ', bizCards);
+      const addContactTx1 = await metacardInstance.connect(owner).addContact(addr1.address);
+      const addContactTx2 = await metacardInstance.connect(owner).addContact(addr2.address);
+      await addContactTx1.wait();
+      await addContactTx2.wait();
+
+      const contacts = await metacardInstance.connect(owner).getAllContacts();
+      expect(contacts.length).to.eq(2);
+
+      const contactsCount1 = await metacardInstance.getContactsCount();
+      expect(contactsCount1).to.eq(2); 
+
+      const contactCard = await metacardInstance.connect(owner).getBusinessCardByAddress(addr2.address);
+      expect(contactCard.fullName).to.equal("Test User");
+
+      const removeContactTx1 = await metacardInstance.connect(owner).removeContact(addr1.address);
+      await removeContactTx1.wait();
+
+      const updatedContacts = await metacardInstance.connect(owner).getAllContacts();
+      expect(updatedContacts.length).to.eq(1);
+
+      const contactsCount2 = await metacardInstance.getContactsCount();
+      expect(contactsCount2).to.eq(1);      
     });
   });
 });
