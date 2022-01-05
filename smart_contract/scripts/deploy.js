@@ -1,20 +1,21 @@
-const main = async () => {
-  const transactionsFactory = await hre.ethers.getContractFactory("MetaCard");
-  const transactionsContract = await transactionsFactory.deploy();
+async function main() {
+  const [deployer] = await ethers.getSigners();
 
-  await transactionsContract.deployed();
+  console.log("Deploying contracts with the account:", deployer.address);
 
-  console.log("MetaCard address: ", transactionsContract.address);
+  console.log("Account balance:", (await deployer.getBalance()).toString());
+
+  const metacardFactory = await ethers.getContractFactory("MetaCard");
+  const metacardContract = await metacardFactory.deploy();
+
+  await metacardContract.deployed();
+
+  console.log("MetaCard address: ", metacardContract.address);
 };
 
-const runMain = async () => {
-  try {
-    await main();
-    process.exit(0);
-  } catch (error) {
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
     console.error(error);
     process.exit(1);
-  }
-};
-
-runMain();
+  });

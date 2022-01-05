@@ -14,9 +14,6 @@ describe("MetaCard", () => {
     metacardInstance = await Metacard.deploy();
 
     [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
-    console.log('Owner: ', owner.address);
-    console.log('addr1: ', addr1.address);
-    console.log('addr2: ', addr2.address);
     await metacardInstance.deployed();
   });
 
