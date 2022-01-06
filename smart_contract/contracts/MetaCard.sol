@@ -15,96 +15,112 @@ contract MetaCard {
     }
 
     struct BusinessCard {
-        uint256 id;
         address owner;
+        uint256 id;
         string fullName;
         string title;
+        string email;
         string phoneNumber;
     }
 
     event CreateBusinessCard(
+        address indexed _owner,
         uint256 id,
-        address owner,
         string fullName,
         string title,
+        string email,
         string phoneNumber
     );
 
     event UpdateBusinessCard(
-        address owner,
+        address indexed _owner,
         string fullName,
         string title,
+        string email,
         string phoneNumber
     );
 
-    event AddContact(address owner);
-    event RemoveContact(address owner);
+    event AddContact(address owner, address contactAddress);
+    event RemoveContact(address owner, address contactAddress);
 
-    event AddSocialLink(uint256 id, string name, string link);
-    event UpdateSocialLink(uint256 id, string name, string link);
-    event RemoveSocialLink(uint256 id);
-
-    BusinessCard public businessCard;
-    SocialLink[] public socialLinks;
-    address[] public contacts;
+    event AddSocialLink(
+        address indexed _owner,
+        uint256 id,
+        string name,
+        string link
+    );
+    event UpdateSocialLink(
+        address indexed _owner,
+        uint256 id,
+        string name,
+        string link
+    );
+    event RemoveSocialLink(address indexed _owner, uint256 id);
 
     mapping(address => BusinessCard) public allBusinessCards;
+    mapping(address => SocialLink[]) public socialLinks;
+    mapping(address => address[]) public contacts;
 
     function createBusinessCard(
         string memory _fullName,
         string memory _title,
+        string memory _email,
         string memory _phoneNumber
     ) public {
         cardsCount += 1;
-        businessCard = BusinessCard(
-            cardsCount,
-            msg.sender,
-            _fullName,
-            _title,
-            _phoneNumber
-        );
         allBusinessCards[msg.sender] = BusinessCard(
-            cardsCount,
             msg.sender,
+            cardsCount,
             _fullName,
             _title,
+            _email,
             _phoneNumber
         );
         emit CreateBusinessCard(
-            cardsCount,
             msg.sender,
+            cardsCount,
             _fullName,
             _title,
+            _email,
             _phoneNumber
         );
     }
 
     function getBusinessCard() public view returns (BusinessCard memory) {
-        return businessCard;
+        return allBusinessCards[msg.sender];
     }
 
     function getSocialLinks() public view returns (SocialLink[] memory) {
-        return socialLinks;
+        return socialLinks[msg.sender];
     }
 
     function updateBusinessCard(
         string memory _fullName,
         string memory _title,
+        string memory _email,
         string memory _phoneNumber
     ) public {
-        BusinessCard memory _businessCard = businessCard;
+        BusinessCard memory _businessCard = allBusinessCards[msg.sender];
         _businessCard.fullName = _fullName;
         _businessCard.title = _title;
+        _businessCard.email = _email;
         _businessCard.phoneNumber = _phoneNumber;
-        businessCard = _businessCard;
         allBusinessCards[msg.sender] = _businessCard;
-        emit UpdateBusinessCard(msg.sender, _fullName, _title, _phoneNumber);
+        emit UpdateBusinessCard(
+            msg.sender,
+            _fullName,
+            _title,
+            _email,
+            _phoneNumber
+        );
     }
 
     function addSocialLink(string memory _name, string memory _link) public {
         socialLinksCount += 1;
-        socialLinks.push(SocialLink(socialLinksCount, _name, _link));
-        emit AddSocialLink(socialLinksCount, _name, _link);
+        socialLinks[msg.sender].push(
+            SocialLink(socialLinksCount, _name, _link)
+        );
+        emit AddSocialLink(msg.sender, socialLinksCount, _name, _link);
     }
 
     function updateSocialLink(
@@ -113,26 +129,28 @@ contract MetaCard {
         string memory _link
     ) public {
         require(_id > 0);
-        for (uint256 i = 0; i < socialLinks.length - 1; i++) {
-            if (socialLinks[i].id == _id) {
-                SocialLink memory _socialLink = socialLinks[i];
+        for (uint256 i = 0; i < socialLinks[msg.sender].length - 1; i++) {
+            if (socialLinks[msg.sender][i].id == _id) {
+                SocialLink memory _socialLink = socialLinks[msg.sender][i];
                 _socialLink.name = _name;
                 _socialLink.link = _link;
-                socialLinks[i] = _socialLink;
-                emit UpdateSocialLink(_id, _name, _link);
+                socialLinks[msg.sender][i] = _socialLink;
+                emit UpdateSocialLink(msg.sender, _id, _name, _link);
             }
         }
     }
 
     function removeSocialLink(uint256 _id) public {
-        require(_id < socialLinks.length);
-        for (uint256 i = 0; i < socialLinks.length - 1; i++) {
-            if (socialLinks[i].id == _id) {
-                delete socialLinks[i];
-                socialLinks[i] = socialLinks[socialLinks.length - 1];
-                socialLinks.pop();
+        require(_id < socialLinks[msg.sender].length);
+        for (uint256 i = 0; i < socialLinks[msg.sender].length - 1; i++) {
+            if (socialLinks[msg.sender][i].id == _id) {
+                delete socialLinks[msg.sender][i];
+                socialLinks[msg.sender][i] = socialLinks[msg.sender][
+                    socialLinks[msg.sender].length - 1
+                ];
+                socialLinks[msg.sender].pop();
                 socialLinksCount -= 1;
-                emit RemoveSocialLink(_id);
+                emit RemoveSocialLink(msg.sender, _id);
             }
         }
     }
@@ -141,19 +159,21 @@ contract MetaCard {
         require(allBusinessCards[_contact].owner != address(0x0));
         contactsCount += 1;
         BusinessCard memory _contactBusinessCard = allBusinessCards[_contact];
-        contacts.push(_contactBusinessCard.owner);
-        emit AddContact(_contactBusinessCard.owner);
+        contacts[msg.sender].push(_contactBusinessCard.owner);
+        emit AddContact(msg.sender, _contactBusinessCard.owner);
     }
 
     function removeContact(address _contact) public {
         require(allBusinessCards[_contact].owner != address(0x0));
-        for (uint256 i = 0; i < contacts.length - 1; i++) {
-            if (contacts[i] == _contact) {
-                delete contacts[i];
-                contacts[i] = contacts[contacts.length - 1];
-                contacts.pop();
+        for (uint256 i = 0; i < contacts[msg.sender].length - 1; i++) {
+            if (contacts[msg.sender][i] == _contact) {
+                delete contacts[msg.sender][i];
+                contacts[msg.sender][i] = contacts[msg.sender][
+                    contacts[msg.sender].length - 1
+                ];
+                contacts[msg.sender].pop();
                 contactsCount -= 1;
-                emit RemoveContact(_contact);
+                emit RemoveContact(msg.sender, _contact);
             }
         }
     }
@@ -181,6 +201,6 @@ contract MetaCard {
     }
 
     function getAllContacts() public view returns (address[] memory) {
-        return contacts;
+        return contacts[msg.sender];
     }
 }

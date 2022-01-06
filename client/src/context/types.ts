@@ -15,6 +15,11 @@ export interface IMetaCardContext {
   getEthereumContract?: () => ethers.Contract;
   getAccount?: () => Promise<string>;
   connectWallet?: () => Promise<void>;
+  // new
+  businessCard: IBusinessCard;
+  createBusinessCard: (card: IBusinessCard) => Promise<void>;
+  updateBusinessCard: (card: IBusinessCard) => Promise<void>;
+  isLoading: boolean;
 }
 
 export type MetamaskAdapterValues = {
@@ -33,3 +38,23 @@ export type MetamaskAdapterValues = {
 export type TSetAccount = (account: string) => void;
 export type TGetAccount = () => string | null;
 export type TRemoveAccount = () => void;
+
+export interface IBusinessCard {
+  id?: string;
+  owner: string;
+  fullName: string;
+  title: string;
+  email: string;
+  phoneNumber: string;
+}
+
+export type BusinessCardData = Pick<
+  IBusinessCard,
+  "fullName" | "email" | "title" | "phoneNumber"
+>;
+
+export interface ISocialLink {
+  id: number;
+  name: string;
+  link: string;
+}

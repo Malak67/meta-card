@@ -34,8 +34,8 @@ export const Navbar: FC = () => {
   return (
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
       <Link to="/" className="md:flex-[1] flex flex-row flex-initial items-center">
-        <img src={logo} alt="logo" className="w-24 cursor-pointer" />
-        <h1 className="ml-3 text-white text-3xl">Meta Card</h1>
+        <img src={logo} alt="logo" className="w-20 cursor-pointer" />
+        <h1 className="ml-3 text-white text-2xl">Meta Card</h1>
       </Link>
       <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
         {links.map((item) => (

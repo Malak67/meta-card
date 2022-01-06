@@ -1,15 +1,14 @@
-import React, { FC } from "react";
-// import { useWeb3React } from "@web3-react/core";
+import React, { FC, useContext } from "react";
+import { MetaCardContext } from "../../context/MetaCardContext";
 import { ConnectMetamask } from "../../shared";
 
 export const withMetamask = (Component: FC<any>) => {
-//   const ComponentWithMetamask = (props: any) => {
-//     const { account } = useWeb3React();
+  const ComponentWithMetamask = (props: any) => {
+    const { account } = useContext(MetaCardContext);
+    if (!account) return <ConnectMetamask />;
 
-//     if (!account) return <ConnectMetamask />;
+    return <Component {...props} />;
+  };
 
-//     return <Component {...props} />;
-//   };
-
-//   return ComponentWithMetamask;
+  return ComponentWithMetamask;
 };

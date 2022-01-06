@@ -27,13 +27,15 @@ describe("MetaCard", () => {
     })
 
     it("Should return the new business card", async () => {
-      const createBusinessCardTx = await metacardInstance.createBusinessCard("John Doe", "Full Stack Developer", "+1-202-555-0163");
+      const createBusinessCardTx = await metacardInstance.createBusinessCard("John Doe", "Full Stack Developer", "johnDoe@email.com", "+1-202-555-0163");
 
       // wait until the transaction is mined
       await createBusinessCardTx.wait();
+      // const card = await metacardInstance.getBusinessCard();
       const card = await metacardInstance.getBusinessCard();
       expect(card.fullName).to.equal("John Doe");
       expect(card.title).to.equal("Full Stack Developer");
+      expect(card.email).to.equal("johnDoe@email.com");
       expect(card.phoneNumber).to.equal("+1-202-555-0163");
 
       const bizCardsCount = await metacardInstance.getBusinessCardsCount();
@@ -44,15 +46,16 @@ describe("MetaCard", () => {
     });
 
     it("Should update a business card", async () => {
-      const createBusinessCardTx = await metacardInstance.createBusinessCard("John Doe", "Full Stack Developer", "+1-202-555-0163");
+      const createBusinessCardTx = await metacardInstance.createBusinessCard("John Doe", "Full Stack Developer", "johnDoe@email.com", "+1-202-555-0163");
       await createBusinessCardTx.wait();
 
-      const updateBusinessCardTx = await metacardInstance.updateBusinessCard("John Doe 2", "Solidity Developer", "+1-202-555-0164")
+      const updateBusinessCardTx = await metacardInstance.updateBusinessCard("John Doe 2", "Solidity Developer", "johnDoe2@email.com", "+1-202-555-0164")
       await updateBusinessCardTx.wait();
 
       const card = await metacardInstance.getBusinessCard();
       expect(card.fullName).to.equal("John Doe 2");
       expect(card.title).to.equal("Solidity Developer");
+      expect(card.email).to.equal("johnDoe2@email.com");
       expect(card.phoneNumber).to.equal("+1-202-555-0164");
     });
 
@@ -104,17 +107,17 @@ describe("MetaCard", () => {
     });
 
     it("Should add contacts and remove one contact", async () => {
-      const createBusinessCardTx2 = await metacardInstance.connect(addr1).createBusinessCard("Jane Doe", "UI/UX Developer", "+1-202-555-0135");
+      const createBusinessCardTx2 = await metacardInstance.connect(addr1).createBusinessCard("Jane Doe", "UI/UX Developer", "janeDoe@email.com", "+1-202-555-0135");
       await createBusinessCardTx2.wait();
       const card2 = await metacardInstance.connect(addr1).getBusinessCard();
       expect(card2.fullName).to.equal("Jane Doe");
 
-      const createBusinessCardTx3 = await metacardInstance.connect(addr2).createBusinessCard("Test User", "Project Manager", "+1-202-555-0186");
+      const createBusinessCardTx3 = await metacardInstance.connect(addr2).createBusinessCard("Test User", "Project Manager", "testUser@email.com", "+1-202-555-0186");
       await createBusinessCardTx3.wait();
       const card3 = await metacardInstance.connect(addr2).getBusinessCard();
       expect(card3.fullName).to.equal("Test User");
 
-      const createBusinessCardTx1 = await metacardInstance.createBusinessCard("John Doe", "Full Stack Developer", "+1-202-555-0163");
+      const createBusinessCardTx1 = await metacardInstance.createBusinessCard("John Doe", "Full Stack Developer", "johnDoe@email.com", "+1-202-555-0163");
       await createBusinessCardTx1.wait();
       const card = await metacardInstance.connect(owner).getBusinessCard();
       expect(card.fullName).to.equal("John Doe");
@@ -128,7 +131,7 @@ describe("MetaCard", () => {
       expect(contacts.length).to.eq(2);
 
       const contactsCount1 = await metacardInstance.getContactsCount();
-      expect(contactsCount1).to.eq(2); 
+      expect(contactsCount1).to.eq(2);
 
       const contactCard = await metacardInstance.connect(owner).getBusinessCardByAddress(addr2.address);
       expect(contactCard.fullName).to.equal("Test User");
@@ -140,7 +143,7 @@ describe("MetaCard", () => {
       expect(updatedContacts.length).to.eq(1);
 
       const contactsCount2 = await metacardInstance.getContactsCount();
-      expect(contactsCount2).to.eq(1);      
+      expect(contactsCount2).to.eq(1);
     });
   });
 });
