@@ -2,16 +2,32 @@ import { FC } from "react";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import { NavLink } from "../types/types";
+export interface FooterLinkProps {
+  item: NavLink;
+}
+
+const FooterLink: FC<FooterLinkProps> = ({ item }: FooterLinkProps) => (
+  <Link
+    to={item.link}
+    className="text-white text-base text-center mx-2 cursor-pointer hover:text-gray-300"
+  >
+    {item.title}
+  </Link>
+);
 
 export const Footer: FC = () => {
   const links: NavLink[] = [
     {
-      link: "contacts",
-      title: "Contacts",
-    },
-    {
       link: "meta-card",
       title: "Meta Card",
+    },
+    {
+      link: "social-links",
+      title: "Social Links",
+    },
+    {
+      link: "contacts",
+      title: "Contacts",
     },
   ];
   return (
@@ -21,18 +37,9 @@ export const Footer: FC = () => {
           <img src={logo} alt="logo" className="w-24" />
         </Link>
         <div className="flex flex-1 justify-evenly items-center flex-wrap sm:mt-0 mt-5 w-full">
-          <Link
-            to="meta-card"
-            className="text-white text-base text-center mx-2 cursor-pointer"
-          >
-            My card
-          </Link>
-          <Link
-            to="contacts"
-            className="text-white text-base text-center mx-2 cursor-pointer"
-          >
-            Contacts
-          </Link>
+          {links.map((item) => (
+            <FooterLink key={item.title + "" + item.link} item={item} />
+          ))}
         </div>
       </div>
 

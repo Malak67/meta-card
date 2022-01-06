@@ -8,13 +8,11 @@ import { MetaCardContext } from "../../context/MetaCardContext";
 export const useBusinessCardFormEffects = () => {
   const { isLoading, businessCard, createBusinessCard, updateBusinessCard } =
     useContext(MetaCardContext);
-  console.log("isLoading: ", isLoading);
-  console.log("businessCard: ", businessCard);
   const defaultValues: BusinessCardData = {
-    fullName: businessCard?.fullName,
-    title: businessCard?.title,
-    email: businessCard?.email,
-    phoneNumber: businessCard?.phoneNumber,
+    fullName: businessCard?.fullName || "",
+    title: businessCard?.title || "",
+    email: businessCard?.email || "",
+    phoneNumber: businessCard?.phoneNumber || "",
   };
 
   let isUpdating: boolean = false;
@@ -53,10 +51,10 @@ export const useBusinessCardFormEffects = () => {
 
   const onSubmit = async (data: IBusinessCard) => {
     if (isUpdating) {
-      console.log('Is updating')
+      console.log("Is updating");
       updateBusinessCard(data);
     } else {
-      console.log('Is creating');
+      console.log("Is creating");
       createBusinessCard(data);
     }
     reset();
@@ -70,9 +68,9 @@ export const useBusinessCardFormEffects = () => {
       phoneNumber: businessCard?.phoneNumber,
     };
     setValue("fullName", businessCard?.fullName || "");
-    setValue("title", businessCard?.title);
-    setValue("email", businessCard?.email);
-    setValue("phoneNumber", businessCard?.phoneNumber);
+    setValue("title", businessCard?.title || "");
+    setValue("email", businessCard?.email || "");
+    setValue("phoneNumber", businessCard?.phoneNumber || "");
     console.log("Inside use effect: ", values);
     isUpdating = !!businessCard;
   }, [businessCard]);

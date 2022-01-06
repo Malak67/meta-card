@@ -1,5 +1,9 @@
 export const ContactList = () => (
   <div className="min-h-screen">
-    <h1>ContactList</h1>
+  <div className="flex w-full justify-center items-center">
+    <div className="flex mf:flex-row flex-col items-start justify-between md:p-20 py-12 px-4">
+      <h1 className="text-white text-2xl">Contact List</h1>
+    </div>
   </div>
+</div>
 );

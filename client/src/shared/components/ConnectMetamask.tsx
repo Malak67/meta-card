@@ -19,7 +19,7 @@ export const ConnectMetamask = () => {
     : "Connect Metamask";
 
   return (
-    <div className="p-10 bg-[#0f0e13] w-96 rounded-md text-center">
+    <div className="p-10 white-glassmorphism w-96 rounded-md text-center">
       <button
         onClick={clickHandler}
         className="relative p-0.5 inline-flex items-center justify-center font-bold overflow-hidden group rounded-md"

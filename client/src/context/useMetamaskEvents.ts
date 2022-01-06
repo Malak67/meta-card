@@ -11,6 +11,7 @@ export const useMetamaskEvents = (
       console.log("Please connect to MetaMask.");
     }
     const account = accounts[0];
+    window.location.reload();
     if (process.env.NODE_ENV === "development") {
       console.log(`Account changed to ${account}`);
     }
@@ -37,6 +38,11 @@ export const useMetamaskEvents = (
     closeHandler();
   };
 
+  const handleConnect = () => {
+    console.log('On connect ')
+    window.location.reload();
+  }
+
   const handleEvents = () => {
     try {
       if (!window.ethereum)
@@ -45,6 +51,7 @@ export const useMetamaskEvents = (
         window.ethereum.on("accountsChanged", handleAccountsChange);
         window.ethereum.on("chainChanged", handleChainChange);
         window.ethereum.on("disconnect", handleDisconnect);
+        window.ethereum.on('connect', handleConnect);
       }
     } catch (error) {
       console.error(error);

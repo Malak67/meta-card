@@ -3,6 +3,7 @@ import { withMetamask } from "../utils";
 import { FC, useContext } from "react";
 import { MetaCardContext } from "../context/MetaCardContext";
 import { BusinessCard } from "../components";
+import { Link } from "react-router-dom";
 
 export const Component: FC = () => {
   const { businessCard } = useContext(MetaCardContext);
@@ -10,11 +11,20 @@ export const Component: FC = () => {
   return (
     <>
       {!businessCard ? (
-      <h1 className="text-white">
-        No business card added! Please create one here
-      </h1>
-      ) :
-      (<BusinessCard {...businessCard}/>)}
+        <div className="white-glassmorphism p-10">
+          <h1 className="text-white">
+            No business card added! Please create one{" "}
+            <Link
+              to="/meta-card"
+              className="cursor-pointer hover:text-gray-300"
+            >
+              here
+            </Link>
+          </h1>
+        </div>
+      ) : (
+        <BusinessCard {...businessCard} />
+      )}
     </>
   );
 };

@@ -15,7 +15,7 @@ const NavBarItem: FC<NavBarItemProps> = ({
   item,
   classprops,
 }: NavBarItemProps) => (
-  <Link to={item.link} className={`mx-4 cursor-pointer ${classprops}`}>
+  <Link to={item.link} className={`mx-4 cursor-pointer hover:text-gray-300 ${classprops}`}>
     {item.title}
   </Link>
 );
@@ -25,6 +25,10 @@ export const Navbar: FC = () => {
     {
       link: "meta-card",
       title: "My Card",
+    },
+    {
+      link: "social-links",
+      title: "Social Links",
     },
     {
       link: "contacts",
