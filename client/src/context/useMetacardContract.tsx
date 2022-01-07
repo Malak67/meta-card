@@ -12,6 +12,7 @@ export const useMetacardContract = (
   setIsLoading: (bool: boolean) => void,
   setBusinessCard: (businessCard: IBusinessCard) => void,
   setSocialLinks: (socialLinks: ISocialLink[]) => void,
+  setContacts: (contacts: string[]) => void,
   account?: string
 ) => {
   const { ethereum } = window;
@@ -215,6 +216,57 @@ export const useMetacardContract = (
     }
   };
 
+  const getContacts = async () => {
+    try {
+      if (window.ethereum) {
+        const metaCardContract = getEthereumContract();
+        setIsLoading(true);
+        const contacts = await metaCardContract.getAllContacts();
+        if (contacts && contacts.length) {
+          console.log('contacts: ', contacts);
+          // mapSocialLinks(socialLinks);
+          setContacts(contacts);
+        }
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  }
+
+  const addContact = async (address: string) => {
+    try {
+      if (window.ethereum) {
+        const metaCardContract = getEthereumContract();
+        const contactTx = await metaCardContract.addContact(address);
+        setIsLoading(true);
+        await contactTx.wait();
+        setIsLoading(false);
+        await getContacts();
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  const removeContact = async (address: string) => {
+    try {
+      if (window.ethereum) {
+        const metaCardContract = getEthereumContract();
+        const contactTx = await metaCardContract.removeContact(address);
+        setIsLoading(true);
+        await contactTx.wait();
+        setIsLoading(false);
+        await getContacts();
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  }
+
   return {
     getBusinessCard,
     createBusinessCard,
@@ -223,5 +275,8 @@ export const useMetacardContract = (
     getSocialLinks,
     removeSocialLink,
     updateSocialLink,
+    getContacts,
+    addContact,
+    removeContact,
   };
 };

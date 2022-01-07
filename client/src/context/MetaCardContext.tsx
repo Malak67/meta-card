@@ -14,9 +14,13 @@ export const MetaCardContext = createContext<IMetaCardContext>({
   getSocialLinks: async () => {},
   removeSocialLink: async () => {},
   updateSocialLink: async () => {},
+  getContacts: async () => {},
+  addContact: async () => {},
+  removeContact: async () => {},
   isLoading: true,
   businessCard: null,
   socialLinks: [],
+  contacts: [],
 });
 
 export const MetaCardProvider = ({
@@ -27,6 +31,7 @@ export const MetaCardProvider = ({
   const [isLoading, setIsLoading] = useState(true);
   const [businessCard, setBusinessCard] = useState<IBusinessCard | null>(null);
   const [socialLinks, setSocialLinks] = useState<ISocialLink[] | []>([]);
+  const [contacts, setContacts] = useState<string[] | []>([]);
 
   const {
     getAccount,
@@ -50,10 +55,14 @@ export const MetaCardProvider = ({
     getSocialLinks,
     removeSocialLink,
     updateSocialLink,
+    getContacts,
+    addContact,
+    removeContact,
   } = useMetacardContract(
     setIsLoading,
     setBusinessCard,
     setSocialLinks,
+    setContacts,
     account
   );
 
@@ -66,12 +75,16 @@ export const MetaCardProvider = ({
     connectWallet,
     businessCard,
     socialLinks,
+    contacts,
     createBusinessCard,
     updateBusinessCard,
     addSocialLink,
     getSocialLinks,
     removeSocialLink,
     updateSocialLink,
+    getContacts,
+    addContact,
+    removeContact,
     isLoading,
   };
 
@@ -82,6 +95,7 @@ export const MetaCardProvider = ({
     handleEvents();
     getBusinessCard();
     getSocialLinks();
+    getContacts();
   }, []);
 
   return (

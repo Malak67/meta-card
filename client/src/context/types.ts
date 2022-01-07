@@ -14,6 +14,7 @@ export interface IMetaCardContext {
   web3?: Web3Provider;
   businessCard: IBusinessCard | null;
   socialLinks: ISocialLink[],
+  contacts: string[],
   getEthereumContract?: () => ethers.Contract;
   getAccount?: () => Promise<string>;
   connectWallet?: () => Promise<void>;
@@ -23,6 +24,9 @@ export interface IMetaCardContext {
   getSocialLinks: () => Promise<void>;
   removeSocialLink: (id: number) => Promise<void>;
   updateSocialLink: (socialLink: ISocialLink) => Promise<void>;
+  getContacts: () => Promise<void>;
+  addContact: (addr: string) => Promise<void>;
+  removeContact: (addr: string) => Promise<void>;
   isLoading: boolean;
 }
 

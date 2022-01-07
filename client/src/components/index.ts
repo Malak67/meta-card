@@ -5,3 +5,4 @@ export * from './BusinessCardForm';
 export * from './BusinessCard';
 export * from './SocialLink';
 export * from './MetaButton';
+export * from './ContactItem';
