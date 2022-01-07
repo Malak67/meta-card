@@ -163,7 +163,6 @@ export const useMetacardContract = (
         setIsLoading(false);
         const socialLinks = await metaCardContract.getSocialLinks();
         if (socialLinks && socialLinks.length) {
-          console.log("Social links: ", socialLinks);
           mapSocialLinks(socialLinks);
         }
       }
@@ -174,7 +173,6 @@ export const useMetacardContract = (
   };
 
   const removeSocialLink = async (id: number) => {
-    console.log("Removing with id: ", id);
     try {
       if (window.ethereum) {
         const metaCardContract = getEthereumContract();

@@ -127,7 +127,7 @@ contract MetaCard {
         string memory _link
     ) public {
         require(_id > 0);
-        for (uint256 i = 1; i < socialLinks[msg.sender].length; i++) {
+        for (uint256 i = 0; i < socialLinks[msg.sender].length; i++) {
             if (socialLinks[msg.sender][i].id == _id) {
                 SocialLink memory _socialLink = socialLinks[msg.sender][i];
                 _socialLink.name = _name;
