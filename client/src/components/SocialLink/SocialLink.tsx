@@ -19,6 +19,10 @@ export const SocialLink = () => {
     onUpdate,
     socialLinks,
     headerMessage,
+    opeDeleteModal,
+    closeDeleteModal,
+    isDeleteOpen,
+    onCancelDelete,
   } = useSocialLinkEffects();
 
   useEffect(() => {
@@ -26,7 +30,7 @@ export const SocialLink = () => {
   });
 
   return (
-    <div className="max-w-xl">
+    <div className="max-w-xl w-full">
       <MetaButton
         buttonText="Add new Social link"
         type="button"
@@ -86,6 +90,27 @@ export const SocialLink = () => {
         </form>
       </Modal>
 
+      <Modal
+        className="modal gradient-bg-footer "
+        isOpen={isDeleteOpen}
+        onRequestClose={closeDeleteModal}
+        contentLabel="Modal"
+      >
+        <div className="flex justify-between items-center p-4 flex-col">
+          <h2 className="flex-1 text-white text-center text-1xl">
+            Are you sure you want to remove this link?
+          </h2>
+          <div className="flex justify-end gap-5 mt-10">
+            <button onClick={onCancelDelete} className="bg-transparent hover:bg-[#ff5b79] text-[#fa4466] hover:text-white py-2 px-4 border border-[#ff5b79] hover:border-transparent rounded">
+              Cancel
+            </button>
+            <button onClick={onDelete} className="bg-[#ff5b79] hover:bg-[#fa4466] text-white font-bold py-2 px-4 rounded">
+              Confirm
+            </button>
+          </div>
+        </div>
+      </Modal>
+
       {socialLinks?.length !== 0 && (
         <div className="white-glassmorphism p-10 mt-10">
           <div className="mb-6">
@@ -101,7 +126,7 @@ export const SocialLink = () => {
                 {socialLink?.id && (
                   <>
                     <AiFillDelete
-                      onClick={() => onDelete(socialLink.id)}
+                      onClick={() => opeDeleteModal(socialLink.id)}
                       className="mt-4 cursor-pointer text-2xl text-white hover:text-[#ff5b79] ml-6"
                     />
                     <AiFillEdit

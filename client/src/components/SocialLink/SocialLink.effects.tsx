@@ -9,14 +9,16 @@ import { toast } from "react-toastify";
 
 export const useSocialLinkEffects = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [updateLinkId, setUpdateLinkId] = useState<number | null>();
+  const [deleteLinkId, setDeleteLinkId] = useState<number | null>();
   const { socialLinks, addSocialLink, removeSocialLink, updateSocialLink } =
     useContext(MetaCardContext);
   const defaultValues = {
     name: "",
     link: "",
   };
-  console.log('socialLinks: ', socialLinks);
+  console.log("socialLinks: ", socialLinks);
   const validationSchema = yup
     .object({
       name: yup.string().required("Name is required").label("Name"),
@@ -52,6 +54,20 @@ export const useSocialLinkEffects = () => {
     setIsOpen(true);
   };
 
+  const opeDeleteModal = (id: number) => {
+    setIsDeleteOpen(true);
+    setDeleteLinkId(id);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteOpen(false);
+  };
+
+  const onCancelDelete = () => {
+    closeDeleteModal();
+    setDeleteLinkId(null);
+  };
+
   const closeModal = () => {
     reset();
     setIsOpen(false);
@@ -60,27 +76,31 @@ export const useSocialLinkEffects = () => {
 
   const onSubmit = async (data: SocialLinkData) => {
     if (updateLinkId !== null && updateLinkId !== undefined) {
-      console.log("Is updating: ", data);
       const updatingSocialLink: ISocialLink = {
         id: updateLinkId,
         name: data.name,
         link: data.link,
-      }
+      };
       updateSocialLink(updatingSocialLink);
     } else {
-      console.log("Is creating: ", data);
       addSocialLink(data);
     }
     closeModal();
   };
 
-  const onDelete = (id: number) => {
-    const socialLink = socialLinks.find((socialLink) => socialLink.id === id);
+  const onDelete = () => {
+    if (!deleteLinkId) {
+      return;
+    }
+    closeDeleteModal();
+    const socialLink = socialLinks.find(
+      (socialLink) => socialLink.id === deleteLinkId
+    );
     if (!socialLink) {
       toast.error("Social link not found in the list");
     }
-    console.log("Found social link with id: ", id, socialLink);
-    removeSocialLink(id);
+    removeSocialLink(deleteLinkId);
+    setDeleteLinkId(null);
   };
 
   const onUpdate = (socialLink: ISocialLink) => {
@@ -93,7 +113,9 @@ export const useSocialLinkEffects = () => {
     setValue("link", socialLink?.link || "");
   };
 
-  let headerMessage = updateLinkId ? "Update Social Link" : "Add new Social link";
+  let headerMessage = updateLinkId
+    ? "Update Social Link"
+    : "Add new Social link";
 
   return {
     isOpen,
@@ -107,5 +129,9 @@ export const useSocialLinkEffects = () => {
     errors,
     socialLinks,
     headerMessage,
+    opeDeleteModal,
+    closeDeleteModal,
+    isDeleteOpen,
+    onCancelDelete,
   };
 };

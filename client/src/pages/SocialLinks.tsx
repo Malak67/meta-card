@@ -4,7 +4,7 @@ import { MetaCardContext } from "../context/MetaCardContext";
 import { withMetamask } from "../utils";
 
 export const Component = () => {
-  const { isLoading, socialLinks } = useContext(MetaCardContext);
+  const { isLoading } = useContext(MetaCardContext);
 
   return (
     <>

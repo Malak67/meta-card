@@ -26,17 +26,19 @@ export const Component: FC = () => {
       ) : (
         <div>
           <BusinessCard {...businessCard} />
-          <div className="white-glassmorphism p-10 mt-10">
-            <div className="mb-6">
-              {socialLinks.map((socialLink: ISocialLink) => (
-                <MetaButton
-                  key={socialLink.link + "-" + socialLink.name}
-                  link={socialLink.link}
-                  buttonText={socialLink.name}
-                />
-              ))}
+          {socialLinks?.length !== 0 && (
+            <div className="white-glassmorphism p-10 mt-10">
+              <div className="mb-6">
+                {socialLinks.map((socialLink: ISocialLink) => (
+                  <MetaButton
+                    key={socialLink.link + "-" + socialLink.name}
+                    link={socialLink.link}
+                    buttonText={socialLink.name}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </>

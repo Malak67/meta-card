@@ -92,6 +92,14 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.min-w-300 {
+  min-width: 300px;
+}
+
+.max-w-600 {
+  max-width: 600px;
+}
+
 
 @tailwind base;
 @tailwind components;
