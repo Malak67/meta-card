@@ -5,8 +5,6 @@ import "hardhat/console.sol";
 
 contract MetaCard {
     uint256 cardsCount;
-    uint256 contactsCount;
-    uint256 socialLinksCount;
 
     struct SocialLink {
         uint256 id;
@@ -116,11 +114,11 @@ contract MetaCard {
     }
 
     function addSocialLink(string memory _name, string memory _link) public {
-        socialLinksCount += 1;
+        uint256 socialLinksCount = socialLinks[msg.sender].length;
         socialLinks[msg.sender].push(
-            SocialLink(socialLinksCount, _name, _link)
+            SocialLink(socialLinksCount + 1, _name, _link)
         );
-        emit AddSocialLink(msg.sender, socialLinksCount, _name, _link);
+        emit AddSocialLink(msg.sender, socialLinksCount + 1, _name, _link);
     }
 
     function updateSocialLink(
@@ -129,7 +127,7 @@ contract MetaCard {
         string memory _link
     ) public {
         require(_id > 0);
-        for (uint256 i = 0; i < socialLinks[msg.sender].length - 1; i++) {
+        for (uint256 i = 1; i < socialLinks[msg.sender].length; i++) {
             if (socialLinks[msg.sender][i].id == _id) {
                 SocialLink memory _socialLink = socialLinks[msg.sender][i];
                 _socialLink.name = _name;
@@ -141,23 +139,20 @@ contract MetaCard {
     }
 
     function removeSocialLink(uint256 _id) public {
-        require(_id < socialLinks[msg.sender].length);
-        for (uint256 i = 0; i < socialLinks[msg.sender].length - 1; i++) {
+        require(_id > 0);
+        for (uint256 i = 0; i < socialLinks[msg.sender].length; i++) {
             if (socialLinks[msg.sender][i].id == _id) {
-                delete socialLinks[msg.sender][i];
                 socialLinks[msg.sender][i] = socialLinks[msg.sender][
                     socialLinks[msg.sender].length - 1
                 ];
                 socialLinks[msg.sender].pop();
-                socialLinksCount -= 1;
-                emit RemoveSocialLink(msg.sender, _id);
             }
         }
+        emit RemoveSocialLink(msg.sender, _id);
     }
 
     function addContact(address _contact) public {
         require(allBusinessCards[_contact].owner != address(0x0));
-        contactsCount += 1;
         BusinessCard memory _contactBusinessCard = allBusinessCards[_contact];
         contacts[msg.sender].push(_contactBusinessCard.owner);
         emit AddContact(msg.sender, _contactBusinessCard.owner);
@@ -165,17 +160,15 @@ contract MetaCard {
 
     function removeContact(address _contact) public {
         require(allBusinessCards[_contact].owner != address(0x0));
-        for (uint256 i = 0; i < contacts[msg.sender].length - 1; i++) {
+        for (uint256 i = 0; i < contacts[msg.sender].length; i++) {
             if (contacts[msg.sender][i] == _contact) {
-                delete contacts[msg.sender][i];
                 contacts[msg.sender][i] = contacts[msg.sender][
                     contacts[msg.sender].length - 1
                 ];
                 contacts[msg.sender].pop();
-                contactsCount -= 1;
-                emit RemoveContact(msg.sender, _contact);
             }
         }
+        emit RemoveContact(msg.sender, _contact);
     }
 
     function getBusinessCardByAddress(address _address)
@@ -193,11 +186,11 @@ contract MetaCard {
     }
 
     function getSocialLinksCount() public view returns (uint256) {
-        return socialLinksCount;
+        return socialLinks[msg.sender].length;
     }
 
     function getContactsCount() public view returns (uint256) {
-        return contactsCount;
+        return contacts[msg.sender].length;
     }
 
     function getAllContacts() public view returns (address[] memory) {

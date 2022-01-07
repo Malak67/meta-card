@@ -2,7 +2,7 @@ import { BusinessCardData, IBusinessCard } from "../../context/types";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { MetaCardContext } from "../../context/MetaCardContext";
 
 export const useBusinessCardFormEffects = () => {
@@ -49,7 +49,7 @@ export const useBusinessCardFormEffects = () => {
     }
   }, [isSubmitSuccessful, reset]);
 
-  const onSubmit = async (data: IBusinessCard) => {
+  const onSubmit = async (data: BusinessCardData) => {
     if (isUpdating) {
       console.log("Is updating");
       updateBusinessCard(data);

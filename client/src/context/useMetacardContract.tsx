@@ -88,7 +88,7 @@ export const useMetacardContract = (
     }
   };
 
-  const updateBusinessCard = async (currentBusinessCard: IBusinessCard) => {
+  const updateBusinessCard = async (currentBusinessCard: BusinessCardData) => {
     try {
       if (window.ethereum) {
         const { fullName, title, email, phoneNumber } = currentBusinessCard;
@@ -120,6 +120,18 @@ export const useMetacardContract = (
     }
   };
 
+  const mapSocialLinks = (unformatted: any[]) => {
+    const formattedSocialLinks = unformatted.map((socialLink: any) => {
+      const formattedLink: ISocialLink = {
+        id: socialLink.id.toNumber(),
+        name: socialLink.name,
+        link: socialLink.link,
+      };
+      return formattedLink;
+    });
+    setSocialLinks(formattedSocialLinks);
+  };
+
   const getSocialLinks = async () => {
     try {
       if (window.ethereum) {
@@ -127,11 +139,10 @@ export const useMetacardContract = (
         setIsLoading(true);
         const socialLinks = await metaCardContract.getSocialLinks();
         if (socialLinks && socialLinks.length) {
-          console.log("Social links: ", socialLinks);
-          setSocialLinks(socialLinks);
+          mapSocialLinks(socialLinks);
         }
-        setIsLoading(false);
       }
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -153,6 +164,50 @@ export const useMetacardContract = (
         const socialLinks = await metaCardContract.getSocialLinks();
         if (socialLinks && socialLinks.length) {
           console.log("Social links: ", socialLinks);
+          mapSocialLinks(socialLinks);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  const removeSocialLink = async (id: number) => {
+    console.log("Removing with id: ", id);
+    try {
+      if (window.ethereum) {
+        const metaCardContract = getEthereumContract();
+        const removeSocialLinkTx = await metaCardContract.removeSocialLink(id);
+        setIsLoading(true);
+        await removeSocialLinkTx.wait();
+        setIsLoading(false);
+        const socialLinks = await metaCardContract.getSocialLinks();
+        if (socialLinks && socialLinks.length) {
+          mapSocialLinks(socialLinks);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  const updateSocialLink = async (updatedSocialLink: ISocialLink) => {
+    try {
+      if (window.ethereum) {
+        const { id, name, link } = updatedSocialLink;
+        const metaCardContract = getEthereumContract();
+        const updateSocialLinkTx = await metaCardContract.updateSocialLink(
+          id,
+          name,
+          link
+        );
+        setIsLoading(true);
+        await updateSocialLinkTx.wait();
+        setIsLoading(false);
+        const socialLinks = await metaCardContract.getSocialLinks();
+        if (socialLinks && socialLinks.length) {
           setSocialLinks(socialLinks);
         }
       }
@@ -168,5 +223,7 @@ export const useMetacardContract = (
     updateBusinessCard,
     addSocialLink,
     getSocialLinks,
+    removeSocialLink,
+    updateSocialLink,
   };
 };

@@ -28,10 +28,8 @@ describe("MetaCard", () => {
 
     it("Should return the new business card", async () => {
       const createBusinessCardTx = await metacardInstance.createBusinessCard("John Doe", "Full Stack Developer", "johnDoe@email.com", "+1-202-555-0163");
-
       // wait until the transaction is mined
       await createBusinessCardTx.wait();
-      // const card = await metacardInstance.getBusinessCard();
       const card = await metacardInstance.getBusinessCard();
       expect(card.fullName).to.equal("John Doe");
       expect(card.title).to.equal("Full Stack Developer");
@@ -76,34 +74,70 @@ describe("MetaCard", () => {
     it("Should update a social link", async () => {
       const addSocialLinkTx1 = await metacardInstance.addSocialLink("LinkedIn", "https://linkedin.com");
       const addSocialLinkTx2 = await metacardInstance.addSocialLink("Facebook", "https://facebook.com");
+      const addSocialLinkTx3 = await metacardInstance.addSocialLink("Pinterest", "https://pinterest.com");
+      const addSocialLinkTx4 = await metacardInstance.addSocialLink("Youtube", "https://youtube.com");
+      const addSocialLinkTx5 = await metacardInstance.addSocialLink("Twitter", "https://twitter.com");
       await addSocialLinkTx1.wait();
       await addSocialLinkTx2.wait();
+      await addSocialLinkTx3.wait();
+      await addSocialLinkTx4.wait();
+      await addSocialLinkTx5.wait();
 
       const socialLinks = await metacardInstance.getSocialLinks();
-      const id = socialLinks[0].id.toNumber();
-      const updateSocialLinkTx = await metacardInstance.updateSocialLink(id, "LinkedIn 2", "https://linkedin.com/john-doe");
+      const id = socialLinks[2].id.toNumber();
+      const idTwitter = socialLinks[4].id.toNumber();
+      const updateSocialLinkTx = await metacardInstance.updateSocialLink(id, "Pinterest 2", "https://pinterest.com/john-doe");
+      const updateSocialLinkTx2 = await metacardInstance.updateSocialLink(idTwitter, "Twitter 2", "https://twitter.com/john-doe");
       await updateSocialLinkTx.wait();
+      await updateSocialLinkTx2.wait();
 
       const updatedSocialLinks = await metacardInstance.getSocialLinks();
-      expect(updatedSocialLinks[0].name).to.equal("LinkedIn 2");
-      expect(updatedSocialLinks[0].link).to.equal("https://linkedin.com/john-doe");
+
+      expect(updatedSocialLinks[2].name).to.equal("Pinterest 2");
+      expect(updatedSocialLinks[4].name).to.equal("Twitter 2");
+      expect(updatedSocialLinks[2].link).to.equal("https://pinterest.com/john-doe");
+      expect(updatedSocialLinks[4].link).to.equal("https://twitter.com/john-doe");
     })
 
     it("Should delete a social link", async () => {
       const addSocialLinkTx1 = await metacardInstance.addSocialLink("LinkedIn", "https://linkedin.com");
       const addSocialLinkTx2 = await metacardInstance.addSocialLink("Facebook", "https://facebook.com");
+      const addSocialLinkTx3 = await metacardInstance.addSocialLink("Pinterest", "https://pinterest.com");
+      const addSocialLinkTx4 = await metacardInstance.addSocialLink("Youtube", "https://youtube.com");
+      const addSocialLinkTx5 = await metacardInstance.addSocialLink("Twitter", "https://twitter.com");
       await addSocialLinkTx1.wait();
       await addSocialLinkTx2.wait();
+      await addSocialLinkTx3.wait();
+      await addSocialLinkTx4.wait();
+      await addSocialLinkTx5.wait();
 
       const socialLinks = await metacardInstance.getSocialLinks();
-      expect(socialLinks.length).to.eq(2);
+      expect(socialLinks.length).to.eq(5);
 
-      const id = socialLinks[0].id.toNumber();
+      const id = socialLinks[3].id.toNumber();
+
       const deleteSocialLinkTx1 = await metacardInstance.removeSocialLink(id);
       await deleteSocialLinkTx1.wait();
 
       const updatedSocialLinks = await metacardInstance.getSocialLinks();
-      expect(updatedSocialLinks.length).to.eq(1);
+
+      expect(updatedSocialLinks.length).to.eq(4);
+
+      const id2 = updatedSocialLinks[2].id.toNumber();
+
+      const deleteSocialLinkTx2 = await metacardInstance.removeSocialLink(id2);
+      await deleteSocialLinkTx2.wait();
+
+      const updatedSocialLinks2 = await metacardInstance.getSocialLinks();
+      expect(updatedSocialLinks2.length).to.eq(3);
+
+      const addSocialLinkTx6 = await metacardInstance.addSocialLink("Instagram", "https://Instagram.com");
+      await addSocialLinkTx6.wait();
+
+      const updatedSocialLinks3 = await metacardInstance.getSocialLinks();
+      expect(updatedSocialLinks3.length).to.eq(4);
+      console.log('updatedSocialLinks', updatedSocialLinks3)
+
     });
 
     it("Should add contacts and remove one contact", async () => {

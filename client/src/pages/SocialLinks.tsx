@@ -1,9 +1,35 @@
-export const SocialLinks = () => (
-  <div className="min-h-screen">
-    <div className="flex w-full justify-center items-center">
-      <div className="flex mf:flex-row flex-col items-start justify-between md:p-20 py-12 px-4">
-        <h1 className="text-white text-2xl">Social Links</h1>
+import { FC, useContext } from "react";
+import { SocialLink, Loader } from "../components";
+import { MetaCardContext } from "../context/MetaCardContext";
+import { withMetamask } from "../utils";
+
+export const Component = () => {
+  const { isLoading, socialLinks } = useContext(MetaCardContext);
+
+  return (
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <h1 className="text-white text-2xl">Social Links</h1>
+          <SocialLink />
+        </>
+      )}
+    </>
+  );
+};
+
+export const ManageSocialLinks: FC = withMetamask(Component);
+
+export const SocialLinks = () => {
+  return (
+    <div className="min-h-screen">
+      <div className="flex w-full justify-center items-center">
+        <div className="flex mf:flex-row flex-col items-center justify-between md:p-20 py-12 px-4">
+          <ManageSocialLinks />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};

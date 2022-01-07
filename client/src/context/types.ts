@@ -17,10 +17,12 @@ export interface IMetaCardContext {
   getEthereumContract?: () => ethers.Contract;
   getAccount?: () => Promise<string>;
   connectWallet?: () => Promise<void>;
-  createBusinessCard: (card: IBusinessCard) => Promise<void>;
-  updateBusinessCard: (card: IBusinessCard) => Promise<void>;
+  createBusinessCard: (card: BusinessCardData) => Promise<void>;
+  updateBusinessCard: (card: BusinessCardData) => Promise<void>;
   addSocialLink: (socialLink: SocialLinkData) => Promise<void>;
   getSocialLinks: () => Promise<void>;
+  removeSocialLink: (id: number) => Promise<void>;
+  updateSocialLink: (socialLink: ISocialLink) => Promise<void>;
   isLoading: boolean;
 }
 
@@ -56,7 +58,7 @@ export type BusinessCardData = Pick<
 >;
 
 export interface ISocialLink {
-  id?: number;
+  id: number;
   name: string;
   link: string;
 }

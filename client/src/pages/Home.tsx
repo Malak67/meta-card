@@ -2,11 +2,12 @@ import { withMetamask } from "../utils";
 
 import { FC, useContext } from "react";
 import { MetaCardContext } from "../context/MetaCardContext";
-import { BusinessCard } from "../components";
+import { BusinessCard, MetaButton } from "../components";
 import { Link } from "react-router-dom";
+import { ISocialLink } from "../context/types";
 
 export const Component: FC = () => {
-  const { businessCard } = useContext(MetaCardContext);
+  const { businessCard, socialLinks } = useContext(MetaCardContext);
   console.log("Business card: ", businessCard);
   return (
     <>
@@ -23,7 +24,20 @@ export const Component: FC = () => {
           </h1>
         </div>
       ) : (
-        <BusinessCard {...businessCard} />
+        <div>
+          <BusinessCard {...businessCard} />
+          <div className="white-glassmorphism p-10 mt-10">
+            <div className="mb-6">
+              {socialLinks.map((socialLink: ISocialLink) => (
+                <MetaButton
+                  key={socialLink.link + "-" + socialLink.name}
+                  link={socialLink.link}
+                  buttonText={socialLink.name}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
       )}
     </>
   );

@@ -12,6 +12,8 @@ export const MetaCardContext = createContext<IMetaCardContext>({
   updateBusinessCard: async ({}) => {},
   addSocialLink: async ({}) => {},
   getSocialLinks: async () => {},
+  removeSocialLink: async () => {},
+  updateSocialLink: async () => {},
   isLoading: true,
   businessCard: null,
   socialLinks: [],
@@ -46,6 +48,8 @@ export const MetaCardProvider = ({
     updateBusinessCard,
     addSocialLink,
     getSocialLinks,
+    removeSocialLink,
+    updateSocialLink,
   } = useMetacardContract(
     setIsLoading,
     setBusinessCard,
@@ -66,6 +70,8 @@ export const MetaCardProvider = ({
     updateBusinessCard,
     addSocialLink,
     getSocialLinks,
+    removeSocialLink,
+    updateSocialLink,
     isLoading,
   };
 
