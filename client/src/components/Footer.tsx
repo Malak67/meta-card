@@ -45,7 +45,14 @@ export const Footer: FC = () => {
 
       <div className="flex justify-center items-center flex-col mt-5">
         <p className="text-white text-sm text-center">
-          Come join us and hear for the unexpected miracle
+          Check us out
+          <a
+            className="text-white text-sm text-center font-medium mt-2 ml-2"
+            href="https://www.sprintowl.com"
+            target="_blank"
+          >
+            Sprint Owl
+          </a>
         </p>
         <p className="text-white text-sm text-center font-medium mt-2">
           office@sprintowl.com
@@ -56,7 +63,6 @@ export const Footer: FC = () => {
 
       <div className="sm:w-[90%] w-full flex justify-between items-center mt-3">
         <p className="text-white text-left text-xs">
-          {" "}
           © {new Date().getFullYear()}, SPRINT OWL SRL.
         </p>
         <p className="text-white text-right text-xs">All rights reserved</p>

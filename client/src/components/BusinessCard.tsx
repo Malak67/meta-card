@@ -14,7 +14,7 @@ export const BusinessCard: FC<IBusinessCard> = ({
 
   const avatarUrl = `https://avatars.dicebear.com/api/identicon/${owner}.svg`
   return (
-    <div className="w-auto py-8 px-12 shadow-lg rounded-lg my-20 white-glassmorphism">
+    <div className="w-auto py-8 px-12 shadow-lg rounded-lg my-10 white-glassmorphism">
       <div className="flex justify-center -mt-16 ">
         <img
           className="bg-white w-20 h-20 object-cover rounded-md"

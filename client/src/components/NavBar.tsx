@@ -15,7 +15,10 @@ const NavBarItem: FC<NavBarItemProps> = ({
   item,
   classprops,
 }: NavBarItemProps) => (
-  <Link to={item.link} className={`mx-4 cursor-pointer hover:text-gray-300 ${classprops}`}>
+  <Link
+    to={item.link}
+    className={`mx-4 cursor-pointer hover:text-gray-300 ${classprops}`}
+  >
     {item.title}
   </Link>
 );
@@ -36,16 +39,21 @@ export const Navbar: FC = () => {
     },
   ];
   return (
-    <nav className="w-full flex md:justify-center justify-between items-center p-4">
-      <Link to="/" className="md:flex-[1] flex flex-row flex-initial items-center">
-        <img src={logo} alt="logo" className="w-20 cursor-pointer" />
-        <h1 className="ml-3 text-white text-2xl">Meta Card</h1>
-      </Link>
-      <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
-        {links.map((item) => (
-          <NavBarItem key={item.title + "" + item.link} item={item} />
-        ))}
-      </ul>
+    <nav className="w-full flex md:justify-center justify-between items-center flex-col p-4">
+      <div className="w-full flex sm:flex-row flex-col justify-between items-center my-4">
+        <Link
+          to="/"
+          className="md:flex-[0.5] flex flex-row flex-initial justify-center items-center"
+        >
+          <img src={logo} alt="logo" className="w-20 cursor-pointer" />
+          <h1 className="ml-3 text-white text-2xl">Meta Card</h1>
+        </Link>
+        <ul className="text-white flex flex-1 justify-evenly items-center flex-wrap sm:mt-0 mt-5 w-full">
+          {links.map((item) => (
+            <NavBarItem key={item.title + "" + item.link} item={item} />
+          ))}
+        </ul>
+      </div>
     </nav>
   );
 };

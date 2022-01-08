@@ -6,3 +6,4 @@ export * from './BusinessCard';
 export * from './SocialLink';
 export * from './MetaButton';
 export * from './ContactItem';
+export * from './ServiceCard';
