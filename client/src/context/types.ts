@@ -27,6 +27,10 @@ export interface IMetaCardContext {
   getContacts: () => Promise<void>;
   addContact: (addr: string) => Promise<void>;
   removeContact: (addr: string) => Promise<void>;
+  getBusinessCardByAddr: (addr: string) => Promise<void>;
+  publicBusinessCard:  IBusinessCard | null;
+  publicSocialLinks: ISocialLink[],
+  getPublicSocialLinks: (addr: string) => Promise<void>;
   isLoading: boolean;
 }
 

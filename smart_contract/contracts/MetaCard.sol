@@ -181,6 +181,16 @@ contract MetaCard {
         return _businessCard;
     }
 
+    function getSocialLinksByAddress(address _address)
+        public
+        view
+        returns (SocialLink[] memory)
+    {
+        require(_address != address(0x0));
+        SocialLink[] memory _socialLinks = socialLinks[_address];
+        return _socialLinks;
+    }
+
     function getBusinessCardsCount() public view returns (uint256) {
         return cardsCount;
     }

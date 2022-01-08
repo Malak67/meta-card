@@ -3,7 +3,7 @@ import { ContactItem, Loader } from "../components";
 import { MetaCardContext } from "../context/MetaCardContext";
 import { withMetamask } from "../utils";
 
-export const Component = () => {
+const Component = () => {
   const { isLoading } = useContext(MetaCardContext);
 
   return (
@@ -20,7 +20,7 @@ export const Component = () => {
   );
 };
 
-export const Contacts: FC = withMetamask(Component);
+const Contacts: FC = withMetamask(Component);
 
 export const ContactList = () => (
   <div className="min-h-screen">

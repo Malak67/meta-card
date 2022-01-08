@@ -3,7 +3,7 @@ import { SocialLink, Loader } from "../components";
 import { MetaCardContext } from "../context/MetaCardContext";
 import { withMetamask } from "../utils";
 
-export const Component = () => {
+const Component = () => {
   const { isLoading } = useContext(MetaCardContext);
 
   return (
@@ -20,7 +20,7 @@ export const Component = () => {
   );
 };
 
-export const ManageSocialLinks: FC = withMetamask(Component);
+const ManageSocialLinks: FC = withMetamask(Component);
 
 export const SocialLinks = () => {
   return (

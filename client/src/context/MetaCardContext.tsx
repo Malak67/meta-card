@@ -17,9 +17,13 @@ export const MetaCardContext = createContext<IMetaCardContext>({
   getContacts: async () => {},
   addContact: async () => {},
   removeContact: async () => {},
+  getBusinessCardByAddr: async () => {},
+  getPublicSocialLinks: async () => {},
   isLoading: true,
   businessCard: null,
+  publicBusinessCard: null,
   socialLinks: [],
+  publicSocialLinks: [],
   contacts: [],
 });
 
@@ -30,7 +34,9 @@ export const MetaCardProvider = ({
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [businessCard, setBusinessCard] = useState<IBusinessCard | null>(null);
+  const [publicBusinessCard, setPublicBusinessCard] = useState<IBusinessCard | null>(null);
   const [socialLinks, setSocialLinks] = useState<ISocialLink[] | []>([]);
+  const [publicSocialLinks, setPublicSocialLinks] = useState<ISocialLink[] | []>([]);
   const [contacts, setContacts] = useState<string[] | []>([]);
 
   const {
@@ -58,11 +64,15 @@ export const MetaCardProvider = ({
     getContacts,
     addContact,
     removeContact,
+    getBusinessCardByAddr,
+    getPublicSocialLinks,
   } = useMetacardContract(
     setIsLoading,
     setBusinessCard,
     setSocialLinks,
     setContacts,
+    setPublicBusinessCard,
+    setPublicSocialLinks,
     account
   );
 
@@ -85,6 +95,10 @@ export const MetaCardProvider = ({
     getContacts,
     addContact,
     removeContact,
+    getBusinessCardByAddr,
+    publicBusinessCard,
+    publicSocialLinks,
+    getPublicSocialLinks,
     isLoading,
   };
 

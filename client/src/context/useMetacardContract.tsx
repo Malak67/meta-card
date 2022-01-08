@@ -13,7 +13,9 @@ export const useMetacardContract = (
   setBusinessCard: (businessCard: IBusinessCard) => void,
   setSocialLinks: (socialLinks: ISocialLink[]) => void,
   setContacts: (contacts: string[]) => void,
-  account?: string
+  setPublicBusinessCard: (businessCard: IBusinessCard) => void,
+  setPublicSocialLinks: (socialLinks: ISocialLink[]) => void,
+  account: string | undefined
 ) => {
   const { ethereum } = window;
 
@@ -223,7 +225,7 @@ export const useMetacardContract = (
         setIsLoading(true);
         const contacts = await metaCardContract.getAllContacts();
         if (contacts && contacts.length) {
-          console.log('contacts: ', contacts);
+          console.log("contacts: ", contacts);
           // mapSocialLinks(socialLinks);
           setContacts(contacts);
         }
@@ -233,7 +235,7 @@ export const useMetacardContract = (
       console.log(error);
       setIsLoading(false);
     }
-  }
+  };
 
   const addContact = async (address: string) => {
     try {
@@ -265,7 +267,58 @@ export const useMetacardContract = (
       console.log(error);
       setIsLoading(false);
     }
-  }
+  };
+
+  const getBusinessCardByAddr = async (addr: string) => {
+    try {
+      if (window.ethereum) {
+        const metaCardContract = getEthereumContract();
+        setIsLoading(true);
+        const businessCard = await metaCardContract.getBusinessCardByAddress(
+          addr
+        );
+        if (businessCard && businessCard.owner.slice(0, 3) !== "0x0") {
+          const card: IBusinessCard = {
+            owner: businessCard.owner,
+            fullName: businessCard.fullName,
+            title: businessCard.title,
+            email: businessCard.email,
+            phoneNumber: businessCard.phoneNumber,
+          };
+          setPublicBusinessCard(card);
+        }
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  const getPublicSocialLinks = async (addr: string) => {
+    try {
+      if (window.ethereum) {
+        const metaCardContract = getEthereumContract();
+        setIsLoading(true);
+        const unformatted = await metaCardContract.getSocialLinksByAddress(addr);
+        if (unformatted && unformatted.length) {
+          const formattedSocialLinks = unformatted.map((socialLink: any) => {
+            const formattedLink: ISocialLink = {
+              id: socialLink.id.toNumber(),
+              name: socialLink.name,
+              link: socialLink.link,
+            };
+            return formattedLink;
+          });
+          setPublicSocialLinks(formattedSocialLinks);
+        }
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
 
   return {
     getBusinessCard,
@@ -278,5 +331,7 @@ export const useMetacardContract = (
     getContacts,
     addContact,
     removeContact,
+    getBusinessCardByAddr,
+    getPublicSocialLinks,
   };
 };

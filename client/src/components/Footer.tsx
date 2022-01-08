@@ -19,7 +19,7 @@ export const Footer: FC = () => {
   const links: NavLink[] = [
     {
       link: "meta-card",
-      title: "Meta Card",
+      title: "My Card",
     },
     {
       link: "social-links",

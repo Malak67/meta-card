@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import { IBusinessCard } from "../context/types";
 import { shortenAddress } from "../utils";
 
@@ -27,9 +28,9 @@ export const BusinessCard: FC<IBusinessCard> = ({
         <p className="mt-2 text-1xl text-white">Phone number: {phoneNumber}</p>
       </div>
       <div className="flex justify-center mt-4">
-        <a href="#" className="text-2xl font-medium text-white">
+        <Link to={`/${owner}`} className="text-2xl font-medium text-white hover:text-[#ff5b79]">
           {shortenAddress(owner)}
-        </a>
+        </Link>
       </div>
     </div>
   );

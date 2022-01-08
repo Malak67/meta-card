@@ -14,10 +14,10 @@ export const Component: FC = () => {
       {!businessCard ? (
         <div className="white-glassmorphism p-10">
           <h1 className="text-white">
-            No business card added! Please create one{" "}
+            No business card added! Please create one
             <Link
               to="/meta-card"
-              className="cursor-pointer hover:text-gray-300"
+              className="cursor-pointer hover:text-gray-300 ml-2 hover:text-[#ff5b79]"
             >
               here
             </Link>

@@ -136,7 +136,9 @@ describe("MetaCard", () => {
 
       const updatedSocialLinks3 = await metacardInstance.getSocialLinks();
       expect(updatedSocialLinks3.length).to.eq(4);
-      console.log('updatedSocialLinks', updatedSocialLinks3)
+     
+      const publicSocialLinks = await metacardInstance.getSocialLinksByAddress(owner.address);
+      expect(publicSocialLinks.length).to.eq(4);
 
     });
 

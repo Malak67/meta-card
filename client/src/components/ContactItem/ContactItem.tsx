@@ -5,6 +5,7 @@ import { useContactItemEffects } from "./ContactItem.effects";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { AiFillDelete } from "react-icons/ai";
 import { shortenAddress } from "../../utils";
+import { Link } from "react-router-dom";
 
 export const ContactItem = () => {
   const {
@@ -107,9 +108,9 @@ export const ContactItem = () => {
                 key={contactAddr}
                 className="mt-6 w-full relative inline-flex items-center justify-center"
               >
-                <h2 className="text-2xl text-white">
+                <Link to={`/${contactAddr}`} className="text-2xl text-white hover:text-[#ff5b79]">
                   {shortenAddress(contactAddr)}
-                </h2>
+                </Link>
                 <AiFillDelete
                   onClick={() => opeDeleteModal(contactAddr)}
                   className="cursor-pointer text-2xl text-white hover:text-[#ff5b79] ml-6"
