@@ -46,7 +46,7 @@ export const Navbar: FC = () => {
           className="md:flex-[0.5] flex flex-row flex-initial justify-center items-center"
         >
           <img src={logo} alt="logo" className="w-20 cursor-pointer" />
-          <h1 className="ml-3 text-white text-2xl">Meta Card</h1>
+          <h1 className="ml-3 text-white text-2xl">Meta Page</h1>
         </Link>
         <ul className="text-white flex flex-1 justify-evenly items-center flex-wrap sm:mt-0 mt-5 w-full">
           {links.map((item) => (
