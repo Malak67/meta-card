@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { MetaCardContext } from "../../context/MetaCardContext";
-import metamaskLogo from "./../../assets/metamask-logo.svg";
+import metamaskLogo from "../../assets/metamask-logo.svg";
 
 export const ConnectMetamask = () => {
   const { connectWallet, isConnectedToRightNetwork } =
