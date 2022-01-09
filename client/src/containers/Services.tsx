@@ -1,10 +1,10 @@
 import { ServiceCard } from "../components";
 import { AiOutlineContacts } from "react-icons/ai";
 import { IoShareSocialOutline } from "react-icons/io5";
-import { FaAddressCard } from "react-icons/fa";
+import { BsShieldFillCheck } from "react-icons/bs";
 
 export const Services = () => (
-  <div className="flex w-full justify-center items-">
+  <div className="flex w-full justify-center items-center">
     <div className="flex flex-col items-center justify-between md:p-20 py-12 px-4 gap-10 my-20">
       <div className="flex-1 flex flex-col justify-start items-center">
         <h1 className="text-white text-3xl sm:text-5xl py-2">
@@ -21,9 +21,9 @@ export const Services = () => (
       <div className="flex-1 flex flex-col justify-start items-center flex-0 gap-2">
         <ServiceCard
           color="bg-[#ff5b79]"
-          title="Meta business card"
-          icon={<FaAddressCard fontSize={21} className="text-white" />}
-          subtitle="Digital business card on the blockchain network"
+          title="Security"
+          icon={<BsShieldFillCheck fontSize={21} className="text-white" />}
+          subtitle="Security is guaranteed. We always maintain privacy and the quality of our products"
         />
         <ServiceCard
           color="bg-[#2bbbad]"

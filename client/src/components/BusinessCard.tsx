@@ -10,8 +10,6 @@ export const BusinessCard: FC<IBusinessCard> = ({
   email,
   phoneNumber,
 }: IBusinessCard) => {
-  console.log("I am receiving this: ", owner);
-
   const avatarUrl = `https://avatars.dicebear.com/api/identicon/${owner}.svg`
   return (
     <div className="w-auto py-8 px-12 shadow-lg rounded-lg my-10 white-glassmorphism">
@@ -28,7 +26,7 @@ export const BusinessCard: FC<IBusinessCard> = ({
         <p className="mt-2 text-1xl text-white">Phone number: {phoneNumber}</p>
       </div>
       <div className="flex justify-center mt-4">
-        <Link to={`/${owner}`} className="text-2xl font-medium text-white hover:text-[#ff5b79]">
+        <Link to={`/public/${owner}`} className="text-2xl font-medium text-white hover:text-[#ff5b79]">
           {shortenAddress(owner)}
         </Link>
       </div>

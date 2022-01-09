@@ -51,10 +51,8 @@ export const useBusinessCardFormEffects = () => {
 
   const onSubmit = async (data: BusinessCardData) => {
     if (isUpdating) {
-      console.log("Is updating");
       updateBusinessCard(data);
     } else {
-      console.log("Is creating");
       createBusinessCard(data);
     }
     reset();
@@ -71,7 +69,6 @@ export const useBusinessCardFormEffects = () => {
     setValue("title", businessCard?.title || "");
     setValue("email", businessCard?.email || "");
     setValue("phoneNumber", businessCard?.phoneNumber || "");
-    console.log("Inside use effect: ", values);
     isUpdating = !!businessCard;
   }, [businessCard]);
 

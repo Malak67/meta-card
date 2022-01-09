@@ -1,7 +1,8 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_SUPPORTED_NETWORK_IDS: string;
+  readonly VITE_ROPSTEN_NETWORK_ID: string;
+  readonly VITE_CONTRACT_ADDRESS: string;
 }
 
 interface ImportMeta {

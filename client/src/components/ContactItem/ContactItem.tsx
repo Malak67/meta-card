@@ -108,7 +108,7 @@ export const ContactItem = () => {
                 key={contactAddr}
                 className="mt-6 w-full relative inline-flex items-center justify-center"
               >
-                <Link to={`/${contactAddr}`} className="text-2xl text-white hover:text-[#ff5b79]">
+                <Link to={`/public/${contactAddr}`} className="text-2xl text-white hover:text-[#ff5b79]">
                   {shortenAddress(contactAddr)}
                 </Link>
                 <AiFillDelete

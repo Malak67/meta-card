@@ -55,7 +55,6 @@ export const useContactItemEffects = () => {
   };
 
   const onSubmit = async (data: { address: string }) => {
-    console.log("Address: ", data);
     addContact(data.address);
     closeModal();
   };

@@ -18,7 +18,6 @@ export const useSocialLinkEffects = () => {
     name: "",
     link: "",
   };
-  console.log("socialLinks: ", socialLinks);
   const validationSchema = yup
     .object({
       name: yup.string().required("Name is required").label("Name"),

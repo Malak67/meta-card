@@ -3,7 +3,7 @@ import { BusinessCard, BusinessCardForm } from "../components";
 import { withMetamask } from "../utils";
 import { MetaCardContext } from "../context/MetaCardContext";
 
-export const Component: FC = () => {
+const Component: FC = () => {
   const { businessCard } = useContext(MetaCardContext);
   return (
     <>
@@ -23,7 +23,7 @@ export const Component: FC = () => {
   );
 };
 
-export const MetaBusinessCard: FC = withMetamask(Component);
+const MetaBusinessCard: FC = withMetamask(Component);
 
 export const MetaCard = () => {
   return (

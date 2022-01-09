@@ -12,7 +12,7 @@ export const useMetamaskEvents = (
     }
     const account = accounts[0];
     window.location.reload();
-    if (process.env.NODE_ENV === "development") {
+    if (import.meta.env.NODE_ENV === "development") {
       console.log(`Account changed to ${account}`);
     }
     updateHandler(account);
@@ -22,7 +22,7 @@ export const useMetamaskEvents = (
     try {
       const chainId = BigNumber.from(chainIdBN).toNumber();
 
-      if (process.env.NODE_ENV === "development") {
+      if (import.meta.env.NODE_ENV === "development") {
         console.log(`Chain ID changed to ${chainId}`);
       }
       window.location.reload();
@@ -32,7 +32,7 @@ export const useMetamaskEvents = (
   };
 
   const handleDisconnect = () => {
-    if (process.env.NODE_ENV === "development") {
+    if (import.meta.env.NODE_ENV === "development") {
       console.log(`[origin-ui-web3]: Handling disconnect`);
     }
     closeHandler();

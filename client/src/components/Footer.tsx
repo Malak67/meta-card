@@ -47,7 +47,7 @@ export const Footer: FC = () => {
         <p className="text-white text-sm text-center">
           Check us out
           <a
-            className="text-white text-sm text-center font-medium mt-2 ml-2"
+            className="text-white text-sm text-center font-medium mt-2 ml-2 hover:text-gray-300"
             href="https://www.sprintowl.com"
             target="_blank"
           >
