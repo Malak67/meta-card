@@ -33,15 +33,17 @@ export const useMetamaskEvents = (
 
   const handleDisconnect = () => {
     if (import.meta.env.NODE_ENV === "development") {
-      console.log(`[origin-ui-web3]: Handling disconnect`);
+      console.log(`Disconnected`);
     }
     closeHandler();
   };
 
   const handleConnect = () => {
-    console.log('On connect ')
-    window.location.reload();
-  }
+    if (import.meta.env.NODE_ENV === "development") {
+      console.log(`Connected`);
+      // window.location.reload();
+    }
+  };
 
   const handleEvents = () => {
     try {
@@ -51,7 +53,7 @@ export const useMetamaskEvents = (
         window.ethereum.on("accountsChanged", handleAccountsChange);
         window.ethereum.on("chainChanged", handleChainChange);
         window.ethereum.on("disconnect", handleDisconnect);
-        window.ethereum.on('connect', handleConnect);
+        window.ethereum.on("connect", handleConnect);
       }
     } catch (error) {
       console.error(error);
