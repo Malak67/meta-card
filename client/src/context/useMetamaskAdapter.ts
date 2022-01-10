@@ -28,7 +28,10 @@ export const useMetamaskAdapter = (): MetamaskAdapterValues => {
     removeLocalStorageAccount();
     setProvider("");
     setIsConnectedToRightNetwork(false);
-    window.location.reload();
+    setTimeout(() => {
+      console.log("REset state: set timeout")
+      // window.location.reload();
+    }, 1000);
   };
 
   const getAccount = async (): Promise<string> => {

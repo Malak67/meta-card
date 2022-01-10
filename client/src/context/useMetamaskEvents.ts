@@ -9,9 +9,10 @@ export const useMetamaskEvents = (
     if (accounts.length === 0) {
       // MetaMask is locked or the user has not connected any accounts
       console.log("Please connect to MetaMask.");
+      toast.error("Please connect to MetaMask.");
     }
     const account = accounts[0];
-    window.location.reload();
+    // window.location.reload();
     if (import.meta.env.NODE_ENV === "development") {
       console.log(`Account changed to ${account}`);
     }
@@ -25,7 +26,7 @@ export const useMetamaskEvents = (
       if (import.meta.env.NODE_ENV === "development") {
         console.log(`Chain ID changed to ${chainId}`);
       }
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -35,20 +36,22 @@ export const useMetamaskEvents = (
     if (import.meta.env.NODE_ENV === "development") {
       console.log(`Disconnected`);
     }
+    console.log("Disconnected");
     closeHandler();
   };
 
   const handleConnect = () => {
     if (import.meta.env.NODE_ENV === "development") {
       console.log(`Connected`);
-      // window.location.reload();
     }
+    closeHandler();
   };
 
   const handleEvents = () => {
     try {
-      if (!window.ethereum)
+      if (!window.ethereum) {
         // toast.error("No Ethereum Provider found on window.ethereum");
+      }
       if (window.ethereum.on) {
         window.ethereum.on("accountsChanged", handleAccountsChange);
         window.ethereum.on("chainChanged", handleChainChange);

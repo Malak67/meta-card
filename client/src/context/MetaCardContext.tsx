@@ -34,9 +34,12 @@ export const MetaCardProvider = ({
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [businessCard, setBusinessCard] = useState<IBusinessCard | null>(null);
-  const [publicBusinessCard, setPublicBusinessCard] = useState<IBusinessCard | null>(null);
+  const [publicBusinessCard, setPublicBusinessCard] =
+    useState<IBusinessCard | null>(null);
   const [socialLinks, setSocialLinks] = useState<ISocialLink[] | []>([]);
-  const [publicSocialLinks, setPublicSocialLinks] = useState<ISocialLink[] | []>([]);
+  const [publicSocialLinks, setPublicSocialLinks] = useState<
+    ISocialLink[] | []
+  >([]);
   const [contacts, setContacts] = useState<string[] | []>([]);
 
   const {
@@ -103,14 +106,16 @@ export const MetaCardProvider = ({
   };
 
   useEffect(() => {
-    checkWalletConnection();
-    checkChainId();
-    getProvider();
-    handleEvents();
-    getBusinessCard();
-    getSocialLinks();
-    getContacts();
-  }, []);
+    if (account) {
+      checkWalletConnection();
+      checkChainId();
+      getProvider();
+      handleEvents();
+      getBusinessCard();
+      getSocialLinks();
+      getContacts();
+    }
+  }, [account]);
 
   return (
     <MetaCardContext.Provider value={context}>
