@@ -48,7 +48,7 @@ export const useMetamaskEvents = (
   const handleEvents = () => {
     try {
       if (!window.ethereum)
-        toast.error("No Ethereum Provider found on window.ethereum");
+        // toast.error("No Ethereum Provider found on window.ethereum");
       if (window.ethereum.on) {
         window.ethereum.on("accountsChanged", handleAccountsChange);
         window.ethereum.on("chainChanged", handleChainChange);

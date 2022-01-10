@@ -72,7 +72,7 @@ export const useMetamaskAdapter = (): MetamaskAdapterValues => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("No ethereum object");
+      // toast.error("No ethereum object");
     }
   };
 
@@ -87,15 +87,16 @@ export const useMetamaskAdapter = (): MetamaskAdapterValues => {
       setAccount(accounts[0]);
     } catch (error) {
       console.log(error);
-      toast.error("No ethereum object");
+      // toast.error("No ethereum object");
       throw new Error("No ethereum object");
     }
   };
 
   const checkChainId = async (): Promise<void> => {
     try {
-      if (!window.ethereum)
-        toast.error("No Ethereum Provider found on window.ethereum");
+      if (!window.ethereum) {
+        // toast.error("No Ethereum Provider found on window.ethereum");
+      }
 
       const receivedChainId = await window.ethereum
         .request({ method: "eth_chainId" })
