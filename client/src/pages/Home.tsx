@@ -5,10 +5,25 @@ import { MetaCardContext } from "../context/MetaCardContext";
 import { BusinessCard } from "../components";
 import { Services } from "../containers";
 import { Features } from "./Features";
+import { Link } from "react-router-dom";
 
 export const Component: FC = () => {
   const { businessCard } = useContext(MetaCardContext);
-  return <>{businessCard && <BusinessCard {...businessCard} />}</>;
+  return (
+    <>
+      {!businessCard ? (
+        <div className="white-glassmorphism p-10">
+          <h1 className="text-white">
+            No business card added! Please create one <Link className="hover:text-[#ff5b79]" to="/meta-card">Here</Link>!
+          </h1>
+        </div>
+      ) : (
+        <div>
+          <BusinessCard {...businessCard} />
+        </div>
+      )}
+    </>
+  );
 };
 
 export const MetaBusinessCard: FC = withMetamask(Component);
