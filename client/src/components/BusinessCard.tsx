@@ -22,8 +22,8 @@ export const BusinessCard: FC<IBusinessCard> = ({
       <div className="mt-4">
         <h2 className="text-center text-white text-2xl font-semibold">{fullName}</h2>
         <p className="text-center mt-4 text-1xl text-white font-semibold">{title}</p>
-        <p className="mt-6 text-1xl text-white">Email: {email}</p>
-        <p className="mt-2 text-1xl text-white">Phone number: {phoneNumber}</p>
+        <p className="mt-6 text-1xl text-white text-center">Email: {email}</p>
+        <p className="mt-2 text-1xl text-white text-center">Phone number: {phoneNumber}</p>
       </div>
       <div className="flex justify-center mt-4">
         <Link to={`/public/${owner}`} className="text-2xl font-medium text-white hover:text-[#ff5b79]">

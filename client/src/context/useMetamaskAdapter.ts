@@ -21,17 +21,19 @@ export const useMetamaskAdapter = (): MetamaskAdapterValues => {
 
   const setAccount = (account: string) => {
     setCurrentAccount(account);
-    setLocalStorageAccount(account);
+    if (account) {
+      setLocalStorageAccount(account);
+    } else {
+      removeLocalStorageAccount(); // Do I need this here?
+    }
   };
 
   const resetState = () => {
     removeLocalStorageAccount();
     setProvider("");
     setIsConnectedToRightNetwork(false);
-    setTimeout(() => {
-      console.log("REset state: set timeout")
-      // window.location.reload();
-    }, 1000);
+    setCurrentAccount("");
+    window.location.reload();
   };
 
   const getAccount = async (): Promise<string> => {
@@ -46,8 +48,9 @@ export const useMetamaskAdapter = (): MetamaskAdapterValues => {
       })) as string[];
 
       account = accounts[0];
-
-      setAccount(account);
+      if (accounts.length) {
+        setAccount(account);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -69,9 +72,6 @@ export const useMetamaskAdapter = (): MetamaskAdapterValues => {
 
       if (accounts.length) {
         setAccount(accounts[0]);
-      } else {
-        setAccount("");
-        console.log("No accounts found");
       }
     } catch (error) {
       console.log(error);

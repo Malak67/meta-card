@@ -56,6 +56,7 @@ export const MetaCardProvider = ({
   } = useMetamaskAdapter();
 
   const { handleEvents } = useMetamaskEvents(setAccount, resetState);
+
   const {
     getBusinessCard,
     createBusinessCard,
@@ -106,15 +107,17 @@ export const MetaCardProvider = ({
   };
 
   useEffect(() => {
-    if (account) {
+    if (account !== undefined && account !== null && account !== "") {
+      console.log("Found account: ", account);
       checkWalletConnection();
       checkChainId();
       getProvider();
-      handleEvents();
       getBusinessCard();
       getSocialLinks();
       getContacts();
     }
+    console.log("Use effect!");
+    handleEvents();
   }, [account]);
 
   return (

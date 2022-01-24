@@ -15,7 +15,7 @@ export const useMetacardContract = (
   setContacts: (contacts: string[]) => void,
   setPublicBusinessCard: (businessCard: IBusinessCard) => void,
   setPublicSocialLinks: (socialLinks: ISocialLink[]) => void,
-  account: string | undefined
+  account?: string
 ) => {
   const { ethereum } = window;
 
@@ -225,8 +225,6 @@ export const useMetacardContract = (
         setIsLoading(true);
         const contacts = await metaCardContract.getAllContacts();
         if (contacts && contacts.length) {
-          console.log("contacts: ", contacts);
-          // mapSocialLinks(socialLinks);
           setContacts(contacts);
         }
       }
