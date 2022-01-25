@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { Web3Provider } from "@ethersproject/providers";
 import { useMetamaskAdapter } from "./useMetamaskAdapter";
 import { IBusinessCard, IMetaCardContext, ISocialLink } from "./types";
-import { useMetamaskEvents } from "./useMetamaskEvents";
+import { setMetamaskListeners } from "./setMetamaskListeners";
 import { useMetacardContract } from "./useMetacardContract";
 
 export const MetaCardContext = createContext<IMetaCardContext>({
@@ -55,7 +55,7 @@ export const MetaCardProvider = ({
     account,
   } = useMetamaskAdapter();
 
-  const { handleEvents } = useMetamaskEvents(setAccount, resetState);
+  const { handleEvents } = setMetamaskListeners(setAccount, resetState);
 
   const {
     getBusinessCard,
@@ -108,17 +108,18 @@ export const MetaCardProvider = ({
 
   useEffect(() => {
     if (account !== undefined && account !== null && account !== "") {
-      console.log("Found account: ", account);
       checkWalletConnection();
-      checkChainId();
-      getProvider();
       getBusinessCard();
       getSocialLinks();
       getContacts();
+      checkChainId();
     }
-    console.log("Use effect!");
-    handleEvents();
   }, [account]);
+
+  useEffect(() => {
+    getProvider();
+    handleEvents();
+  }, []);
 
   return (
     <MetaCardContext.Provider value={context}>

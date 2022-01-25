@@ -33,7 +33,7 @@ export const useMetamaskAdapter = (): MetamaskAdapterValues => {
     setProvider("");
     setIsConnectedToRightNetwork(false);
     setCurrentAccount("");
-    window.location.reload();
+    // window.location.reload();
   };
 
   const getAccount = async (): Promise<string> => {
@@ -108,6 +108,7 @@ export const useMetamaskAdapter = (): MetamaskAdapterValues => {
         supportedNetworkId?.toString() === receivedChainId.toString();
       if (!isConnectedChainId)
         toast.error("You are not connected to Ropsten network");
+        console.log('isConnectedChainId: ', isConnectedChainId)
       setIsConnectedToRightNetwork(isConnectedChainId);
     } catch (error) {
       console.error(error);
