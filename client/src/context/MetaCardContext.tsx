@@ -112,8 +112,8 @@ export const MetaCardProvider = ({
       getBusinessCard();
       getSocialLinks();
       getContacts();
-      checkChainId();
     }
+    checkChainId();
   }, [account]);
 
   useEffect(() => {
