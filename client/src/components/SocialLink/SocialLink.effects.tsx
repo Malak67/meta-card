@@ -14,7 +14,6 @@ export const useSocialLinkEffects = () => {
   const [deleteLinkId, setDeleteLinkId] = useState<number | null>();
   const [socialLinks, setSocialLinks] = useState<ISocialLink[] | []>([]);
   const {
-    isLoading,
     socialLinks: contractSocialLinks,
     addSocialLink,
     updateSocialLink,

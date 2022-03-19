@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { IBusinessCard } from "../context/types";
+import { IBusinessCard } from "../types";
 import { shortenAddress } from "../utils";
 
 export const BusinessCard: FC<IBusinessCard> = ({

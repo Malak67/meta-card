@@ -1,14 +1,19 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { SocialLink, Loader } from '../components';
 import { useSocialLinks } from '../hooks';
 import { withMetamask } from '../utils';
 
 const Component = () => {
   const { isLoading } = useSocialLinks();
+  const [loading, setLoading] = useState(isLoading);
+
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
 
   return (
     <>
-      {isLoading ? (
+      {loading ? (
         <Loader />
       ) : (
         <>

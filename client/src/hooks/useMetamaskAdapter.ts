@@ -6,7 +6,7 @@ import {
   getLocalStorageAccount,
   removeLocalStorageAccount,
   setLocalStorageAccount,
-} from "./localstorage";
+} from "../context/localstorage";
 
 export const useMetamaskAdapter = (): MetamaskAdapterValues => {
   const [currentAccount, setCurrentAccount] = useState(

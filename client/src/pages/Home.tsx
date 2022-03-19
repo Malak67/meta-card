@@ -1,7 +1,7 @@
 import { withMetamask } from '../utils';
 
 import { FC, useEffect, useState } from 'react';
-import { BusinessCard } from '../components';
+import { BusinessCard, Loader } from '../components';
 import { Services } from '../containers';
 import { Features } from './Features';
 import { Link } from 'react-router-dom';
@@ -11,10 +11,20 @@ import { IBusinessCard } from '../types';
 export const Component: FC = () => {
   const { isLoading, card } = useBusinessCard();
   const [businessCard, setBusinessCard] = useState<IBusinessCard | undefined>();
+  const [loading, setLoading] = useState(isLoading);
+
   useEffect(() => {
     setBusinessCard(card);
   }, [card]);
 
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
+
+  if (loading) {
+    return <Loader />;
+  }
+  
   return (
     <>
       {!businessCard || isLoading ? (

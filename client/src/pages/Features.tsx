@@ -1,5 +1,5 @@
 import { MetaButton } from "../components";
-import { SocialLinkData } from "../context/types";
+import { SocialLinkData } from "../types";
 
 export const Features = () => {
   const socialLinks: SocialLinkData[] = [

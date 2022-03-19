@@ -1,13 +1,21 @@
 import { FC } from 'react';
-import { ContactItem } from '../components';
+import { ContactItem, Loader } from '../components';
+import { useContacts } from '../hooks';
 import { withMetamask } from '../utils';
 
 const Component = () => {
+  const { isLoading } = useContacts();
 
   return (
     <>
-      <h1 className='text-white text-2xl'>Contact List</h1>
-      <ContactItem />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <h1 className='text-white text-2xl'>Contact List</h1>
+          <ContactItem />
+        </>
+      )}
     </>
   );
 };
