@@ -6,7 +6,7 @@ import {
   IBusinessCard,
   ISocialLink,
   SocialLinkData,
-} from "./types";
+} from "../types";
 
 export const useMetacardContract = (
   setIsLoading: (bool: boolean) => void,
