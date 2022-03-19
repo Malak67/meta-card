@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { BigNumber } from "@ethersproject/bignumber";
-import { MetamaskAdapterValues } from "./types";
+import { MetamaskAdapterValues } from "../types";
 import {
   getLocalStorageAccount,
   removeLocalStorageAccount,
   setLocalStorageAccount,
-} from "./localstorage";
+} from "../context/localstorage";
 
 export const useMetamaskAdapter = (): MetamaskAdapterValues => {
   const [currentAccount, setCurrentAccount] = useState(

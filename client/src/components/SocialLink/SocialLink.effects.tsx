@@ -1,34 +1,44 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useContext, useEffect } from "react";
-import { ISocialLink, SocialLinkData } from "../../context/types";
-import { MetaCardContext } from "../../context/MetaCardContext";
-import { toast } from "react-toastify";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useEffect } from 'react';
+import { ISocialLink, SocialLinkData } from '../../types';
+import { toast } from 'react-toastify';
+import { useSocialLinks } from '../../hooks';
 
 export const useSocialLinkEffects = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [updateLinkId, setUpdateLinkId] = useState<number | null>();
   const [deleteLinkId, setDeleteLinkId] = useState<number | null>();
-  const { socialLinks, addSocialLink, removeSocialLink, updateSocialLink } =
-    useContext(MetaCardContext);
+  const [socialLinks, setSocialLinks] = useState<ISocialLink[] | []>([]);
+  const {
+    socialLinks: contractSocialLinks,
+    addSocialLink,
+    updateSocialLink,
+    removeSocialLink,
+  } = useSocialLinks();
+
+  useEffect(() => {
+    setSocialLinks(contractSocialLinks);
+  }, [contractSocialLinks]);
+
   const defaultValues = {
-    name: "",
-    link: "",
+    name: '',
+    link: '',
   };
   const validationSchema = yup
     .object({
-      name: yup.string().required("Name is required").label("Name"),
+      name: yup.string().required('Name is required').label('Name'),
       link: yup
         .string()
         .matches(
           /((https?):\/\/)?(www.)?([a-z]+).([a-z]{2,6})(.+)/,
-          "Enter a correct link!"
+          'Enter a correct link!'
         )
-        .required("Link is required")
-        .label("Link"),
+        .required('Link is required')
+        .label('Link'),
     })
     .required();
 
@@ -96,7 +106,7 @@ export const useSocialLinkEffects = () => {
       (socialLink) => socialLink.id === deleteLinkId
     );
     if (!socialLink) {
-      toast.error("Social link not found in the list");
+      toast.error('Social link not found in the list');
     }
     removeSocialLink(deleteLinkId);
     setDeleteLinkId(null);
@@ -108,13 +118,13 @@ export const useSocialLinkEffects = () => {
     }
     openModal();
     setUpdateLinkId(socialLink.id);
-    setValue("name", socialLink?.name || "");
-    setValue("link", socialLink?.link || "");
+    setValue('name', socialLink?.name || '');
+    setValue('link', socialLink?.link || '');
   };
 
   let headerMessage = updateLinkId
-    ? "Update Social Link"
-    : "Add new Social link";
+    ? 'Update Social Link'
+    : 'Add new Social link';
 
   return {
     isOpen,

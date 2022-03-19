@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import { MetaButton } from "../MetaButton";
 import { useSocialLinkEffects } from "./SocialLink.effects";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import { ISocialLink } from "../../context/types";
+import { ISocialLink } from "../../types";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
 export const SocialLink = () => {

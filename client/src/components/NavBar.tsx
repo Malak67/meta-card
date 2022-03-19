@@ -1,7 +1,7 @@
 import { DetailedHTMLProps, FC, HTMLAttributes } from "react";
 import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
-import { NavLink } from "../types/types";
+import { NavLink } from "../types";
 
 export interface NavBarItemProps {
   item: NavLink;

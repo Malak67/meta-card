@@ -1,14 +1,23 @@
-import { useContext, useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { MetaCardContext } from "../../context/MetaCardContext";
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useContacts } from '../../hooks';
 
 export const useContactItemEffects = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const { contacts, addContact, removeContact } = useContext(MetaCardContext);
+  const [contacts, setContacts] = useState<string[] | []>([]);
+  const {
+    contacts: cotractContacts,
+    addContact,
+    removeContact,
+  } = useContacts();
   const [deleteAddress, setDeleteAddress] = useState<string | null>();
+
+  useEffect(() => {
+    setContacts(cotractContacts);
+  }, [cotractContacts]);
 
   const validationSchema = yup
     .object({
@@ -16,9 +25,9 @@ export const useContactItemEffects = () => {
         .string()
         .min(42)
         .max(42)
-        .notOneOf(["0x0"])
-        .required("Address is required")
-        .label("Address"),
+        .notOneOf(['0x0'])
+        .required('Address is required')
+        .label('Address'),
     })
     .required();
 
