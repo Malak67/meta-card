@@ -1,6 +1,7 @@
 {
   "name": "smart_contract",
   "version": "1.0.0",
+  "license": "UNLICENSED",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +9,6 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.3",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
